@@ -8,6 +8,10 @@ import com.edts.edtstechnicaltest.repository.EmployeeRepository;
 import com.edts.edtstechnicaltest.util.EmployeeUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -48,11 +52,12 @@ public class EmployeeService {
                 .build();
     }
 
-    public List<EmployeeResponse> getEmployeeList() {
-        List<Employees> employeesList = employeeRepository.findAll();
+    public Page<EmployeeResponse> getEmployeeList(int size, int page) {
+        Pageable pageable = PageRequest.of((page - 1), size);
+        Page<Employees> employeesList = employeeRepository.findAll(pageable);
         List<EmployeeResponse> response = new ArrayList<>();
 
-        for (Employees employee : employeesList) {
+        for (Employees employee : employeesList.getContent()) {
             Long totalBonus = EmployeeUtil.calculateTotalBonus(employee.getGrade(), employee.getSalary());
             EmployeeResponse employeeRes = EmployeeResponse.builder()
                     .id(employee.getId())
@@ -65,7 +70,7 @@ public class EmployeeService {
             response.add(employeeRes);
         }
 
-        return response;
+        return new PageImpl<>(response, pageable, response.size());
     }
 
     public EmployeeResponse updateEmployee(Long id, EmployeeRequest request) {

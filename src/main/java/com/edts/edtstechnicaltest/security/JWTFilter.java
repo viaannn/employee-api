@@ -1,6 +1,5 @@
 package com.edts.edtstechnicaltest.security;
 
-import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.edts.edtstechnicaltest.service.UserDetailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -40,8 +39,10 @@ public class JWTFilter extends OncePerRequestFilter {
                     if (SecurityContextHolder.getContext().getAuthentication() == null) {
                         SecurityContextHolder.getContext().setAuthentication(authToken);
                     }
-                } catch (JWTVerificationException exc) {
-                    response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid JWT Token");
+
+                } catch (Exception exc) {
+                    response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid JWT Token");
+                    return;
                 }
             }
         }

@@ -3,8 +3,10 @@ package com.edts.edtstechnicaltest.controller;
 import com.edts.edtstechnicaltest.model.request.EmployeeRequest;
 import com.edts.edtstechnicaltest.model.response.BaseResponse;
 import com.edts.edtstechnicaltest.model.response.EmployeeResponse;
+import com.edts.edtstechnicaltest.model.response.PageResponse;
 import com.edts.edtstechnicaltest.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,9 +26,9 @@ public class EmployeeController {
     }
 
     @GetMapping("/list")
-    public BaseResponse<List<EmployeeResponse>> getEmployeeList() {
-        List<EmployeeResponse> response = employeeService.getEmployeeList();
-        return new BaseResponse<>(HttpStatus.OK.value(), "Employee List", response);
+    public PageResponse<List<EmployeeResponse>> getEmployeeList(@RequestParam int size, @RequestParam int page) {
+        Page<EmployeeResponse> response = employeeService.getEmployeeList(size, page);
+        return new PageResponse<>(HttpStatus.OK.value(), "Employee List", response.getContent(), response.getTotalElements(), response.getTotalPages());
     }
 
     @PostMapping("/create")

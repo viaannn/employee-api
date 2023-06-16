@@ -24,21 +24,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final JWTFilter jwtFilter;
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception { // Method to configure your app security
+    protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .httpBasic().disable()
                 .cors()
                 .and()
                 .authorizeHttpRequests()
                 .antMatchers("/api/auth/**").permitAll()
-                .antMatchers("/api/employee/**").authenticated()
+                .antMatchers("/api/employee/**").hasRole("EMPLOYEE")
                 .and()
                 .userDetailsService(userDetailService)
                 .exceptionHandling()
-                .authenticationEntryPoint(
-                        (request, response, authException) ->
-                                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized")
-                )
+                .authenticationEntryPoint((request, response, authException) -> response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized"))
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
