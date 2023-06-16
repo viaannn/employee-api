@@ -16,11 +16,16 @@
 
 - Get from .env.example to setup your own .env property
 - Adjust the Database connection to your own connection
-
+```
+DATABASE_HOST=localhost
+DATABASE_PORT=3306
+DATABASE_NAME=edts-employee
+DATABASE_USERNAME=root
+DATABASE_PASSWORD=root
+```
   <br>
 
 #### Build Application & Install all dependencies
-
 Unix
 
 ```shell
