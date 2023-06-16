@@ -13,3 +13,6 @@ spring:
 jwt:
   secret: ${JWT_SECRET:RAHASIA}
   expires: ${JWT_EXPIRY_TIME_SECONDS:900}
+
+cors:
+  allowed-origin: ${CORS_ORIGIN_ALLOWED}
