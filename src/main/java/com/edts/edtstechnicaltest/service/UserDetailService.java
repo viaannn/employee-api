@@ -29,6 +29,6 @@ public class UserDetailService implements UserDetailsService {
         }
 
         Users user = userRes.get();
-        return new User(username, user.getPassword(), Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER")));
+        return new User(username, user.getPassword(), Collections.singletonList(new SimpleGrantedAuthority("ROLE_EMPLOYEE")));
     }
 }

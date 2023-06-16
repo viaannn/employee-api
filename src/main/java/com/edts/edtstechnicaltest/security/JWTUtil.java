@@ -17,10 +17,10 @@ public class JWTUtil {
     @Value("${jwt.secret}")
     private String secret;
 
-    public String generateToken(String email, int expiresIn) throws IllegalArgumentException, JWTCreationException {
+    public String generateToken(String username, int expiresIn) throws IllegalArgumentException, JWTCreationException {
         return JWT.create()
                 .withSubject("User Details")
-                .withClaim("username", email)
+                .withClaim("username", username)
                 .withIssuedAt(new Date())
                 .withExpiresAt(new Date(System.currentTimeMillis() + TimeUnit.SECONDS.toMillis(expiresIn)))
                 .sign(Algorithm.HMAC256(secret));
