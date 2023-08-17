@@ -1,4 +1,4 @@
-# EDTS Technical Test
+# Employee API
 
 ![java](https://img.shields.io/badge/Java-11-orange)
 ![springboot](https://img.shields.io/badge/Spring%20Boot-2.7.12-brightgreen)
